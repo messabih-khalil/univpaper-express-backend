@@ -2,7 +2,6 @@
 import express, { Request, Response } from 'express';
 import sqlite3 from 'sqlite3';
 import { rateLimit } from 'express-rate-limit';
-import cors from 'cors';
 
 const app = express();
 const port = 3000;
@@ -14,15 +13,6 @@ const limiter = rateLimit({
     message: 'Rate limit exceeded',
     headers: true,
 });
-
-app.use(
-    cors({
-        origin: '*', // or specify allowed origins explicitly
-        methods: 'GET',
-        credentials: true,
-        optionsSuccessStatus: 204,
-    })
-);
 
 app.use(limiter);
 
