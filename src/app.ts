@@ -15,8 +15,16 @@ const limiter = rateLimit({
     headers: true,
 });
 
+app.use(
+    cors({
+        origin: '*', // or specify allowed origins explicitly
+        methods: 'GET',
+        credentials: true,
+        optionsSuccessStatus: 204,
+    })
+);
+
 app.use(limiter);
-app.use(cors());
 
 // SQLite database setup
 const db = new sqlite3.Database('data.db');
