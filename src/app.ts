@@ -2,6 +2,7 @@
 import express, { Request, Response } from 'express';
 import sqlite3 from 'sqlite3';
 import { rateLimit } from 'express-rate-limit';
+import cors from 'cors';
 
 const app = express();
 const port = 3000;
@@ -11,9 +12,11 @@ const limiter = rateLimit({
     windowMs: 24 * 60 * 60 * 1000, // 24 hours
     max: 200, // limit each IP to 200 requests per windowMs
     message: 'Rate limit exceeded',
-    headers: true,
+    standardHeaders: true,
+    legacyHeaders: false,
 });
 
+app.use(cors());
 app.use(limiter);
 
 // SQLite database setup
@@ -75,5 +78,5 @@ app.get('/documents/:branch_id', (req: Request, res: Response) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+    console.log(`Server is running`);
 });
