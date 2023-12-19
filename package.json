@@ -5,7 +5,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build" : "tsc",
-        "start": "pm2 start dist/app.js --name backend",
+        "start": "tsc && pm2 start dist/app.js --name backend",
         "dev": "ts-node src/app.ts"
     },
     "keywords": [],
