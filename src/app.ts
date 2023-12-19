@@ -8,16 +8,15 @@ const app = express();
 const port = 3000;
 
 // Create a rate limiter
-// const limiter = rateLimit({
-//     windowMs: 24 * 60 * 60 * 1000, // 24 hours
-//     max: 200, // limit each IP to 200 requests per windowMs
-//     message: 'Rate limit exceeded',
-//     headers: true,
-// });
+const limiter = rateLimit({
+    windowMs: 24 * 60 * 60 * 1000, // 24 hours
+    max: 200, // limit each IP to 200 requests per windowMs
+    message: 'Rate limit exceeded',
+    headers: true,
+});
 
-// app.use(limiter);
+app.use(limiter);
 app.use(cors());
-app.options('*', cors());
 
 // SQLite database setup
 const db = new sqlite3.Database('data.db');
