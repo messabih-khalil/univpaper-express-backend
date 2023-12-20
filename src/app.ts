@@ -20,7 +20,7 @@ const limiter = rateLimit({
 
 app.use(
     cors({
-        origin: ['https://www.univpaper.xyz/', 'https://www.univpaper.xyz/'],
+        origin: ['https://www.univpaper.xyz', 'https://www.univpaper.xyz'],
     })
 );
 
