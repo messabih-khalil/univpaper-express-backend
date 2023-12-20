@@ -89,15 +89,15 @@ app.get('/documents/:branch_id', (req: Request, res: Response) => {
 app.listen(port, () => {
     console.log(`Server is running ${port}`);
 
-    // process.on('unhandledRejection', (reason, p) => {
-    //     console.error('Unhandled Rejection at:', p, 'reason:', reason);
-    //     // You may want to restart the server here
-    //     process.exit(1);
-    // });
+    process.on('unhandledRejection', (reason, p) => {
+        console.error('Unhandled Rejection at:', p, 'reason:', reason);
+        // You may want to restart the server here
+        process.exit(1);
+    });
 
-    // process.on('uncaughtException', (err) => {
-    //     console.error('Uncaught Exception:', err);
-    //     // You may want to restart the server here
-    //     process.exit(1);
-    // });
+    process.on('uncaughtException', (err) => {
+        console.error('Uncaught Exception:', err);
+        // You may want to restart the server here
+        process.exit(1);
+    });
 });

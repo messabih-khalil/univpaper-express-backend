@@ -4,9 +4,9 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build" : "tsc",
-        "start": "tsc && node dist/app.js",
-        "dev": "ts-node src/app.ts"
+        "build": "tsc",
+        "dev": "ts-node src/app.ts",
+        "start": "tsc && pm2 start dist/app.js --name server"
     },
     "keywords": [],
     "author": "",
