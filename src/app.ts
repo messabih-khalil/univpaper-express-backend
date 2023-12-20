@@ -17,7 +17,8 @@ const limiter = rateLimit({
 });
 
 app.use(cors());
-app.use(limiter);
+
+// app.use(limiter);
 
 // SQLite database setup
 const db = new sqlite3.Database('data.db');
@@ -78,5 +79,5 @@ app.get('/documents/:branch_id', (req: Request, res: Response) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running`);
+    console.log(`Server is running ${port}`);
 });
