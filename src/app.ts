@@ -8,7 +8,8 @@ const app = express();
 const port = 3000;
 
 app.set('trust proxy', true);
-
+// SQLite database setup
+const db = new sqlite3.Database('data.db');
 // Create a rate limiter
 const limiter = rateLimit({
     windowMs: 24 * 60 * 60 * 1000, // 24 hours
@@ -18,18 +19,37 @@ const limiter = rateLimit({
     legacyHeaders: false,
 });
 
+app.options('*', cors());
+app.use('/health', cors());
+
 app.use(
     cors({
         origin: ['https://www.univpaper.xyz', 'https://www.univpaper.xyz'],
     })
 );
+// Use the rate limiter for all routes except the health check
+app.use((req, res, next) => {
+    if (req.path === '/health') {
+        return next();
+    }
+    limiter(req, res, next);
+});
 
-app.options('*', cors());
-
-app.use(limiter);
-
-// SQLite database setup
-const db = new sqlite3.Database('data.db');
+// Customizable health check endpoint accessible from anywhere
+app.get('/health', cors(), (req: Request, res: Response) => {
+    // Check if the SQLite database file is accessible
+    db.serialize(() => {
+        db.run('SELECT 1', (err) => {
+            if (err) {
+                return res.status(500).json({
+                    status: 'error',
+                    message: 'Database connection issue',
+                });
+            }
+            return res.json({ status: 'ok' });
+        });
+    });
+});
 
 // Routes
 app.get('/specialities', (req: Request, res: Response) => {
