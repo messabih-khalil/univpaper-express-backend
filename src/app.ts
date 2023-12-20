@@ -7,11 +7,13 @@ import cors from 'cors';
 const app = express();
 const port = 3000;
 
+app.set('trust proxy', true);
+
 // Create a rate limiter
 const limiter = rateLimit({
     windowMs: 24 * 60 * 60 * 1000, // 24 hours
     max: 300, // limit each IP to 300 requests per windowMs
-    message: 'Rate limit exceeded',
+    message: 'Rate limit exceeded , (try after a while)',
     standardHeaders: true,
     legacyHeaders: false,
 });
